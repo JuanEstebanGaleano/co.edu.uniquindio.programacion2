@@ -41,20 +41,8 @@ public class Miembro {
         prestamosActivos.add(prestamo);
     }
 
-    public void removerPrestamo(Prestamo prestamo) {
-        prestamosActivos.remove(prestamo);
-    }
-
     public List<Multa> getMultasPendientes() {
         return multasPendientes;
-    }
-
-    public void agregarMulta(Multa multa) {
-        multasPendientes.add(multa);
-    }
-
-    public void pagarMulta(Multa multa) {
-        multasPendientes.remove(multa);
     }
 
     @Override
@@ -65,6 +53,14 @@ public class Miembro {
                 ", prestamosActivos=" + prestamosActivos +
                 ", multasPendientes=" + multasPendientes +
                 '}';
+    }
+
+    public void agregarMulta(Multa multa) {
+        multasPendientes.add(multa);
+    }
+
+    public void pagarMulta(Multa multa) {
+        multasPendientes.remove(multa);
     }
 }
 

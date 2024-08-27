@@ -25,4 +25,5 @@ public String getIdEmpleado() {
 public void setIdEmpleado(String idEmpleado) {
     this.idEmpleado = idEmpleado;
 }
+
 }

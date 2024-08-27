@@ -1,56 +1,84 @@
 package co.edu.uniquindio.programacion2trabajos.gestionBiblioteca.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        // Crear algunos libros
+        // Crear libros, miembros y bibliotecario
         Libro libro1 = new Libro("El Quijote", "Miguel de Cervantes", "1234567890");
         Libro libro2 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", "0987654321");
-
-        // Crear algunos miembros
+        Libro libro3 = new Libro("1984", "George Orwell", "1122334455");
         Miembro miembro1 = new Miembro("Juan Pérez", "M001");
         Miembro miembro2 = new Miembro("Ana García", "M002");
-
-        // Crear un bibliotecario
         Bibliotecario bibliotecario = new Bibliotecario("Carlos López", "E001");
 
-        // Realizar algunos préstamos
-        bibliotecario.gestionarPrestamos(miembro1, libro1); // Juan pide El Quijote
-        bibliotecario.gestionarPrestamos(miembro2, libro2); // Ana pide Cien Años de Soledad
+        // Realizar préstamos
+        bibliotecario.gestionarPrestamos(miembro1, libro1);
+        bibliotecario.gestionarPrestamos(miembro2, libro2);
 
-        // Mostrar préstamos activos
-        System.out.println("Préstamos activos de " + miembro1.getNombre() + ":");
-        bibliotecario.mostrarPrestamosActivos(miembro1);
-        System.out.println("\nPréstamos activos de " + miembro2.getNombre() + ":");
-        bibliotecario.mostrarPrestamosActivos(miembro2);
-
-        // Intentar devolver un libro después de 15 días para aplicar una multa
-        Prestamo prestamo1 = miembro1.getPrestamosActivos().getFirst(); // Obtener el préstamo de El Quijote
-        prestamo1.setFechaPrestamo(prestamo1.getFechaPrestamo().minusDays(15)); // Restamos 15 días
-        bibliotecario.devolverLibro(miembro1, prestamo1); // Juan devuelve El Quijote (tarde)
-
-        // Mostrar multas pendientes
-        System.out.println("\nMultas pendientes de " + miembro1.getNombre() + ":");
-        bibliotecario.mostrarMultasPendientes(miembro1);
-
-        // Ana devuelve su libro a tiempo
-        Prestamo prestamo2 = miembro2.getPrestamosActivos().getFirst(); // Obtener el préstamo de Cien Años de Soledad
-        bibliotecario.devolverLibro(miembro2, prestamo2); // Ana devuelve Cien Años de Soledad a tiempo
-
-        // Mostrar multas pendientes para Ana (debería ser ninguna)
-        System.out.println("\nMultas pendientes de " + miembro2.getNombre() + ":");
-        bibliotecario.mostrarMultasPendientes(miembro2);
-
-        // Pagar la multa de Juan
-        if (!miembro1.getMultasPendientes().isEmpty()) {
-            Multa multa = miembro1.getMultasPendientes().getFirst(); // Obtener la primera multa
-            miembro1.pagarMulta(multa);
-            System.out.println("\nMulta pagada por " + miembro1.getNombre() + ": " + multa.getMonto());
-        } else {
-            System.out.println("\nNo hay multas pendientes para " + miembro1.getNombre());
+        // Ejercicio 1: Buscar un libro y mostrar quién lo tiene
+        System.out.println("\nEjercicio 1: Buscar un libro y mostrar quién lo tiene");
+        String tituloBuscado = "El Quijote";
+        boolean libroEncontrado = false;
+        for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
+            if (prestamo.getLibro().getTitulo().equalsIgnoreCase(tituloBuscado)) {
+                System.out.println("El libro '" + tituloBuscado + "' está en préstamo por " + prestamo.getMiembro().getNombre());
+                libroEncontrado = true;
+                break;
+            }
+        }
+        if (!libroEncontrado) {
+            for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
+                if (prestamo.getLibro().getTitulo().equalsIgnoreCase(tituloBuscado)) {
+                    System.out.println("El libro '" + tituloBuscado + "' está en préstamo por " + prestamo.getMiembro().getNombre());
+                    libroEncontrado = true;
+                    break;
+                }
+            }
+        }
+        if (!libroEncontrado) {
+            System.out.println("El libro '" + tituloBuscado + "' no está en préstamo.");
         }
 
-        // Mostrar multas pendientes para Juan (debería estar vacía)
-        System.out.println("\nMultas pendientes de " + miembro1.getNombre() + ":");
+        // Ejercicio 2: Ver todos los libros prestados a un miembro específico
+        System.out.println("\nEjercicio 2: Ver todos los libros prestados a un miembro específico");
+        String miembroBuscado = "Juan Pérez";
+        boolean hayLibrosPrestados = false;
+        if (miembro1.getNombre().equalsIgnoreCase(miembroBuscado)) {
+            for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
+                System.out.println(prestamo.getLibro().getTitulo());
+                hayLibrosPrestados = true;
+            }
+        } else if (miembro2.getNombre().equalsIgnoreCase(miembroBuscado)) {
+            for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
+                System.out.println(prestamo.getLibro().getTitulo());
+                hayLibrosPrestados = true;
+            }
+        }
+        if (!hayLibrosPrestados) {
+            System.out.println("No hay libros prestados a " + miembroBuscado);
+        }
+
+        // Ejercicio 3: Listar todos los libros disponibles en la biblioteca
+        System.out.println("\nEjercicio 3: Listar todos los libros disponibles en la biblioteca");
+        List<Libro> todosLosLibros = List.of(libro1, libro2, libro3);
+        List<Libro> librosPrestados = new ArrayList<>();
+        for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
+            librosPrestados.add(prestamo.getLibro());
+        }
+        for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
+            librosPrestados.add(prestamo.getLibro());
+        }
+        System.out.println("Libros disponibles en la biblioteca:");
+        for (Libro libro : todosLosLibros) {
+            if (!librosPrestados.contains(libro)) {
+                System.out.println(libro.getTitulo() + " por " + libro.getAutor());
+            }
+        }
+        // Mostrar multas pendientes
+        System.out.println("\nMultas pendientes:");
         bibliotecario.mostrarMultasPendientes(miembro1);
+        bibliotecario.mostrarMultasPendientes(miembro2);
     }
 }

@@ -40,7 +40,7 @@ public class Multa {
 
     @Override
     public String toString() {
-        return "\n"+"Multa" +
+        return "Multa" +
                 " monto=" + monto +
                 ", pagada=" + pagada ;
     }

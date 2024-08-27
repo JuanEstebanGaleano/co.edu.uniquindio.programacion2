@@ -57,6 +57,14 @@ public class Miembro {
         multasPendientes.remove(multa);
     }
 
-
+    @Override
+    public String toString() {
+        return "Miembro{" +
+                "nombre='" + nombre + '\'' +
+                ", idMiembro='" + idMiembro + '\'' +
+                ", prestamosActivos=" + prestamosActivos +
+                ", multasPendientes=" + multasPendientes +
+                '}';
+    }
 }
 

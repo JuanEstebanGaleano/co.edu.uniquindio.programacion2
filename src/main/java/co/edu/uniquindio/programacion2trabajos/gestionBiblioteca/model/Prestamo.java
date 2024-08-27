@@ -54,7 +54,7 @@ public Prestamo(){
     }
     @Override
     public String toString() {
-        return "\n"+"" +
+        return
                 "libro=" + (libro != null ? libro.getTitulo() : "No asignado") +  // Mostrar título del libro
                 ", miembro=" + (miembro != null ? miembro.getNombre() : "No asignado") + // Mostrar nombre del miembro
                 ", fechaPrestamo=" + fechaPrestamo +

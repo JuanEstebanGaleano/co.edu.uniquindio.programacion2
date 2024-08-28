@@ -1,84 +1,104 @@
 package co.edu.uniquindio.programacion2trabajos.gestionBiblioteca.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.swing.JOptionPane;
+import java.math.BigDecimal;
 public class Main {
     public static void main(String[] args) {
-        // Crear libros, miembros y bibliotecario
-        Libro libro1 = new Libro("El Quijote", "Miguel de Cervantes", "1234567890");
-        Libro libro2 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", "0987654321");
-        Libro libro3 = new Libro("1984", "George Orwell", "1122334455");
-        Miembro miembro1 = new Miembro("Juan Pérez", "M001");
-        Miembro miembro2 = new Miembro("Ana García", "M002");
-        Bibliotecario bibliotecario = new Bibliotecario("Carlos López", "E001");
+        GestionBiblioteca gestionBiblioteca = new GestionBiblioteca();
+        Bibliotecario bibliotecario = new Bibliotecario("Jane Smith", "E001");
+        // Inicialización de datos
+        gestionBiblioteca.agregarLibro("Cien Años de Soledad", "Gabriel García Márquez", "123456789");
+        gestionBiblioteca.agregarLibro("Don Quijote de la Mancha", "Miguel de Cervantes", "987654321");
+        gestionBiblioteca.agregarMiembro("Juan Pérez", "M001");
+        gestionBiblioteca.agregarMiembro("Ana Gómez", "M002");
 
-        // Realizar préstamos
-        bibliotecario.gestionarPrestamos(miembro1, libro1);
-        bibliotecario.gestionarPrestamos(miembro2, libro2);
-
-        // Ejercicio 1: Buscar un libro y mostrar quién lo tiene
-        System.out.println("\nEjercicio 1: Buscar un libro y mostrar quién lo tiene");
-        String tituloBuscado = "El Quijote";
-        boolean libroEncontrado = false;
-        for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
-            if (prestamo.getLibro().getTitulo().equalsIgnoreCase(tituloBuscado)) {
-                System.out.println("El libro '" + tituloBuscado + "' está en préstamo por " + prestamo.getMiembro().getNombre());
-                libroEncontrado = true;
-                break;
-            }
-        }
-        if (!libroEncontrado) {
-            for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
-                if (prestamo.getLibro().getTitulo().equalsIgnoreCase(tituloBuscado)) {
-                    System.out.println("El libro '" + tituloBuscado + "' está en préstamo por " + prestamo.getMiembro().getNombre());
-                    libroEncontrado = true;
+        int opcion;
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(menuPrincipal()));
+            switch (opcion) {
+                case 1:
+                    String titulo = JOptionPane.showInputDialog("Ingrese el título del libro:");
+                    String autor = JOptionPane.showInputDialog("Ingrese el autor del libro:");
+                    String isbn = JOptionPane.showInputDialog("Ingrese el ISBN del libro:");
+                    if (validarDatosLibro(titulo, autor, isbn)) {
+                        gestionBiblioteca.agregarLibro(titulo, autor, isbn);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos del libro inválidos.");
+                    }
                     break;
-                }
+                case 2:
+                    String nombreMiembro = JOptionPane.showInputDialog("Ingrese el nombre del miembro:");
+                    String idMiembro = JOptionPane.showInputDialog("Ingrese el ID del miembro:");
+                    if (validarDatosMiembro(nombreMiembro, idMiembro)) {
+                        gestionBiblioteca.agregarMiembro(nombreMiembro, idMiembro);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos del miembro inválidos.");
+                    }
+                    break;
+                case 3:
+                    String isbnPrestamo = JOptionPane.showInputDialog("Ingrese el ISBN del libro a prestar:");
+                    String idMiembroPrestamo = JOptionPane.showInputDialog("Ingrese el ID del miembro:");
+                    if (validarDatosPrestamo(isbnPrestamo, idMiembroPrestamo)) {
+                        gestionBiblioteca.gestionarPrestamo(bibliotecario, isbnPrestamo, idMiembroPrestamo);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Datos del préstamo inválidos.");
+                    }
+                    break;
+                case 4:
+                    String idMiembroMulta = JOptionPane.showInputDialog("Ingrese el ID del miembro para agregar multa:");
+                    BigDecimal montoMulta = new BigDecimal(JOptionPane.showInputDialog("Ingrese el monto de la multa:"));
+                    gestionBiblioteca.agregarMulta(idMiembroMulta, montoMulta);
+                    break;
+                case 5:
+                    String idMiembroPagarMulta = JOptionPane.showInputDialog("Ingrese el ID del miembro para pagar multa:");
+                    gestionBiblioteca.pagarMulta(idMiembroPagarMulta);
+                    break;
+                case 6:
+                    gestionBiblioteca.mostrarLibros();
+                    break;
+                case 7:
+                    gestionBiblioteca.mostrarMiembros();
+                    break;
+                case 8:
+                    gestionBiblioteca.mostrarMultas();
+                    break;
+                case 9:
+                    String idMiembroLibros = JOptionPane.showInputDialog("Ingrese el ID del miembro para ver los libros adquiridos:");
+                    gestionBiblioteca.mostrarLibrosAdquiridosPorMiembro(idMiembroLibros);
+                    break;
+                case 10:
+                    JOptionPane.showMessageDialog(null, "Saliendo...");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida.");
+                    break;
             }
-        }
-        if (!libroEncontrado) {
-            System.out.println("El libro '" + tituloBuscado + "' no está en préstamo.");
-        }
+        } while (opcion != 10);
+    }
 
-        // Ejercicio 2: Ver todos los libros prestados a un miembro específico
-        System.out.println("\nEjercicio 2: Ver todos los libros prestados a un miembro específico");
-        String miembroBuscado = "Juan Pérez";
-        boolean hayLibrosPrestados = false;
-        if (miembro1.getNombre().equalsIgnoreCase(miembroBuscado)) {
-            for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
-                System.out.println(prestamo.getLibro().getTitulo());
-                hayLibrosPrestados = true;
-            }
-        } else if (miembro2.getNombre().equalsIgnoreCase(miembroBuscado)) {
-            for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
-                System.out.println(prestamo.getLibro().getTitulo());
-                hayLibrosPrestados = true;
-            }
-        }
-        if (!hayLibrosPrestados) {
-            System.out.println("No hay libros prestados a " + miembroBuscado);
-        }
-
-        // Ejercicio 3: Listar todos los libros disponibles en la biblioteca
-        System.out.println("\nEjercicio 3: Listar todos los libros disponibles en la biblioteca");
-        List<Libro> todosLosLibros = List.of(libro1, libro2, libro3);
-        List<Libro> librosPrestados = new ArrayList<>();
-        for (Prestamo prestamo : miembro1.getPrestamosActivos()) {
-            librosPrestados.add(prestamo.getLibro());
-        }
-        for (Prestamo prestamo : miembro2.getPrestamosActivos()) {
-            librosPrestados.add(prestamo.getLibro());
-        }
-        System.out.println("Libros disponibles en la biblioteca:");
-        for (Libro libro : todosLosLibros) {
-            if (!librosPrestados.contains(libro)) {
-                System.out.println(libro.getTitulo() + " por " + libro.getAutor());
-            }
-        }
-        // Mostrar multas pendientes
-        System.out.println("\nMultas pendientes:");
-        bibliotecario.mostrarMultasPendientes(miembro1);
-        bibliotecario.mostrarMultasPendientes(miembro2);
+    private static String menuPrincipal() {
+        return "1. Agregar Libro\n" +
+                "2. Agregar Miembro\n" +
+                "3. Gestionar Préstamo\n" +
+                "4. Agregar Multa\n" +
+                "5. Pagar Multa\n" +
+                "6. Mostrar Libros\n" +
+                "7. Mostrar Miembros\n" +
+                "8. Mostrar Multas\n" +
+                "9. Mostrar Libros Adquiridos por Miembro\n" +
+                "10. Salir\n" +
+                "Seleccione una opción:";
+    }
+    private static boolean validarDatosLibro(String titulo, String autor, String isbn) {
+        return titulo != null && !titulo.trim().isEmpty() &&
+                autor != null && !autor.trim().isEmpty() &&
+                isbn != null && !isbn.trim().isEmpty();
+    }
+    private static boolean validarDatosMiembro(String nombre, String idMiembro) {
+        return nombre != null && !nombre.trim().isEmpty() &&
+                idMiembro != null && !idMiembro.trim().isEmpty();
+    }
+    private static boolean validarDatosPrestamo(String isbn, String idMiembro) {
+        return isbn != null && !isbn.trim().isEmpty() &&
+                idMiembro != null && !idMiembro.trim().isEmpty();
     }
 }

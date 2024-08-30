@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 public class Main {
     public static void main(String[] args) {
         GestionBiblioteca gestionBiblioteca = new GestionBiblioteca();
-        Bibliotecario bibliotecario = new Bibliotecario("Jane Smith", "E001");
+        Bibliotecario bibliotecario = new Bibliotecario("Jero Stunt", "E001");
         // Inicialización de datos
         gestionBiblioteca.agregarLibro("Cien Años de Soledad", "Gabriel García Márquez", "123456789");
         gestionBiblioteca.agregarLibro("Don Quijote de la Mancha", "Miguel de Cervantes", "987654321");

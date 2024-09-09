@@ -75,19 +75,19 @@ public class Main {
         } while (opcion != 10);
     }
 
-    private static String menuPrincipal() {
-        return "1. Agregar Libro\n" +
-                "2. Agregar Miembro\n" +
-                "3. Gestionar Préstamo\n" +
-                "4. Agregar Multa\n" +
-                "5. Pagar Multa\n" +
-                "6. Mostrar Libros\n" +
-                "7. Mostrar Miembros\n" +
-                "8. Mostrar Multas\n" +
-                "9. Mostrar Libros Adquiridos por Miembro\n" +
-                "10. Salir\n" +
-                "Seleccione una opción:";
-    }
+        private static String menuPrincipal() {
+            return "1. Agregar Libro\n" +
+                    "2. Agregar Miembro\n" +
+                    "3. Gestionar Préstamo\n" +
+                    "4. Agregar Multa\n" +
+                    "5. Pagar Multa\n" +
+                    "6. Mostrar Libros\n" +
+                    "7. Mostrar Miembros\n" +
+                    "8. Mostrar Multas\n" +
+                    "9. Mostrar Libros Adquiridos por Miembro\n" +
+                    "10. Salir\n" +
+                    "Seleccione una opción:";
+        }
     private static boolean validarDatosLibro(String titulo, String autor, String isbn) {
         return titulo != null && !titulo.trim().isEmpty() &&
                 autor != null && !autor.trim().isEmpty() &&

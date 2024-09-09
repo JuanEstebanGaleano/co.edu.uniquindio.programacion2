@@ -51,7 +51,7 @@ public class GestionBiblioteca {
         miembro.agregarPrestamo(prestamo);
         System.out.println("Préstamo realizado con éxito.");
     }
-    public void agregarMulta(String idMiembro, BigDecimal monto) {
+    public void agregarMulta(String idMiembro, BigDecimal monto)     {
         Miembro miembro = buscarMiembro(idMiembro);
         if (miembro != null) {
             Multa multa = new Multa(miembro, monto);

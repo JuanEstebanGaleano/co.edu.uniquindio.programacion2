@@ -1,12 +1,13 @@
 package co.edu.uniquindio.biblioteca.model;
 
 import co.edu.uniquindio.biblioteca.enums.Estado;
+import co.edu.uniquindio.biblioteca.service.IMiembroCrud;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Biblioteca {
+public class Biblioteca implements IMiembroCrud {
 
     private String nombre;
     private List<Miembro> listaMiembros = new ArrayList<>();
@@ -69,7 +70,7 @@ public class Biblioteca {
                 '}';
     }
 
-    public Miembro obtenerMiembro(String cedula){
+    private Miembro obtenerMiembro(String cedula){
         for (Miembro miembro : getListaMiembros()) {
             if(miembro.getCedula().equals(cedula)){
                 return miembro;
@@ -80,7 +81,7 @@ public class Biblioteca {
         return null;
     }
 
-    public Bibliotecario obtenerBibliotecario(String idEmpleado){
+    private Bibliotecario obtenerBibliotecario(String idEmpleado){
         for (Bibliotecario bibliotecario : getListaBibliotecarios()) {
             if(bibliotecario.getIdEmpleado().equals(idEmpleado)){
 
@@ -92,7 +93,7 @@ public class Biblioteca {
         return null;
     }
 
-    public Libro obtenerLibro(String ISBN){
+    private Libro obtenerLibro(String ISBN){
         for (Libro libro : getListaLibros()) {
             if(libro.getISBN().equals(ISBN)){
 
@@ -125,6 +126,11 @@ public class Biblioteca {
                             prestamo.setBibliotecarioAsociado(bibliotecario);
                             getListaPrestamos().add(prestamo);
                             libro.setEstado(Estado.PRESTADO);
+                            libro.setBibliotecarioAsociado(bibliotecario);
+                            libro.setPrestamoAsociado(prestamo);
+                            bibliotecario.getListaLibros().add(libro);
+                            bibliotecario.getListaPrestamos().add(prestamo);
+                            miembro.getListaPrestamosActivos().add(prestamo);
                             System.out.println("RESERVA CREADA\n" + "Libro prestado: " + libro.getTitulo() + "\n" +
                                     "ISBN: " + libro.getISBN() + "\n" + "Miembro asociado: " + miembro.getNombre() + "\n" +
                                     "Bibliotecario asociado: " + bibliotecario.getNombre() + "\n" +
@@ -153,4 +159,31 @@ public class Biblioteca {
         return false;
     }
 
+    @Override
+    public boolean crearMiembro(String nombre, String cedula) {
+        Miembro miembroExistente = obtenerMiembro(cedula);
+        if (miembroExistente == null){
+            Miembro miembro = new Miembro();
+            miembro.setNombre(nombre);
+            miembro.setCedula(cedula);
+            getListaMiembros().add(miembro);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean eliminarMiembro(String cedula) {
+        Miembro miembroExistente = obtenerMiembro(cedula);
+        if (miembroExistente != null) {
+            getListaMiembros().remove(miembroExistente);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean actualizarMiembro(String cedula, String nombre) {
+        return false;
+    }
 }

@@ -2,11 +2,12 @@ package co.edu.uniquindio.biblioteca.factory;
 
 import co.edu.uniquindio.biblioteca.enums.Estado;
 import co.edu.uniquindio.biblioteca.model.*;
+import co.edu.uniquindio.biblioteca.service.IMiembroCrud;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-public class ModelFactory {
+public class ModelFactory implements IMiembroCrud {
 
     private static ModelFactory modelFactory;
     private Biblioteca biblioteca;
@@ -31,7 +32,7 @@ public class ModelFactory {
         biblioteca.crearPrestamo(fechaPrestamo,fechaDevolucion,cedulaMiembro,ISBN,idBibliotecario);
     }
 
-    public Miembro obtenerMiembro(String cedula) {
+    /*public Miembro obtenerMiembro(String cedula) {
         return biblioteca.obtenerMiembro(cedula);
     }
 
@@ -41,6 +42,21 @@ public class ModelFactory {
 
     public Libro obtenerLibro(String ISBN) {
         return biblioteca.obtenerLibro(ISBN);
+    }*/
+
+    @Override
+    public boolean crearMiembro(String nombre, String cedula) {
+        return biblioteca.crearMiembro(nombre,cedula);
+    }
+
+    @Override
+    public boolean eliminarMiembro(String cedula) {
+        return biblioteca.eliminarMiembro(cedula);
+    }
+
+    @Override
+    public boolean actualizarMiembro(String cedula, String nombre) {
+        return biblioteca.actualizarMiembro(cedula,nombre);
     }
 
     private Biblioteca inicializarDatos() {

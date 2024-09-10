@@ -10,16 +10,45 @@ public class Main {
     public static void main(String[] args) {
         ModelFactory modelFactory = ModelFactory.getInstance();
 
-        crearPrestamo(modelFactory,
-                LocalDate.of(2024,9,10),
-                LocalDate.of(2024,9,15),
+        crearPrestamo(
+                modelFactory,
+                LocalDate.of(2024, 9, 10),
+                LocalDate.of(2024, 9, 15),
                 "2124544",
                 "11223",
-                "12121");
+                "12121"
+        );
+        crudMiembro(modelFactory,"Lucho","98482947");
+    }
+
+    private static void crudMiembro(ModelFactory modelFactory,String nombre,String cedula) {
+        crearMiembro(modelFactory,nombre,cedula);
+        eliminarMiembro(modelFactory,cedula);
+        actualizarMienbro(modelFactory,nombre,cedula);
+    }
+
+    private static void actualizarMienbro(ModelFactory modelFactory, String nombre, String cedula) {
 
     }
 
-    private static String obtenerLibro(ModelFactory modelFactory,String ISBN){
+    private static void eliminarMiembro(ModelFactory modelFactory, String cedula) {
+        boolean resultado = modelFactory.eliminarMiembro(cedula);
+        notificacion(resultado,"eliminado");
+    }
+
+    private static void crearMiembro(ModelFactory modelFactory,String nombre,String cedula) {
+        boolean resultado = modelFactory.crearMiembro(nombre,cedula);
+        notificacion(resultado,"registrado");
+    }
+
+    private static void notificacion(boolean resultado,String mensaje) {
+        if (resultado)
+            System.out.println("El miembro se ha " + mensaje + " correctamente");
+        else
+            System.out.println("El miembro no se ha " + mensaje + " correctamente");
+    }
+
+    /*private static String obtenerLibro(ModelFactory modelFactory,String ISBN){
         String resultado;
         resultado = modelFactory.obtenerLibro(ISBN).getTitulo();
         return resultado;
@@ -35,7 +64,7 @@ public class Main {
         String resultado;
         resultado = modelFactory.obtenerBibliotecario(idEmpleado).getNombre();
         return resultado;
-    }
+    }*/
 
     private static void crearPrestamo(ModelFactory modelFactory,
                                      LocalDate fechaPrestamo,

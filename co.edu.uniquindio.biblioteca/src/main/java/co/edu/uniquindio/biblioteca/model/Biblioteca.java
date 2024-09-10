@@ -70,17 +70,6 @@ public class Biblioteca implements IMiembroCrud {
                 '}';
     }
 
-    private Miembro obtenerMiembro(String cedula){
-        for (Miembro miembro : getListaMiembros()) {
-            if(miembro.getCedula().equals(cedula)){
-                return miembro;
-            }
-        }
-        System.out.println("No se encontro el miembro");
-
-        return null;
-    }
-
     private Bibliotecario obtenerBibliotecario(String idEmpleado){
         for (Bibliotecario bibliotecario : getListaBibliotecarios()) {
             if(bibliotecario.getIdEmpleado().equals(idEmpleado)){
@@ -105,11 +94,71 @@ public class Biblioteca implements IMiembroCrud {
         return null;
     }
 
+    public boolean disponibilidadLibro(String ISBN){
+        for (Libro libro : getListaLibros()){
+            if (libro.getISBN().equalsIgnoreCase(ISBN)){
+                if (libro.getEstado() == Estado.DISPONIBLE){
+                    return true;
+                } else {
+                    System.out.println("Libro no esta disponible");
+                    return false;
+                }
+            }
+        }
+        System.out.println("Libro no encontrado en la lista");
+        return false;
+    }
+
+    private Miembro obtenerMiembro(String cedula){
+        for (Miembro miembro : getListaMiembros()) {
+            if(miembro.getCedula().equals(cedula)){
+                return miembro;
+            }
+        }
+        System.out.println("No se encontro el miembro");
+
+        return null;
+    }
+
+    @Override
+    public boolean crearMiembro(String nombre, String cedula) {
+        Miembro miembroExistente = obtenerMiembro(cedula);
+        if (miembroExistente == null){
+            Miembro miembro = new Miembro();
+            miembro.setNombre(nombre);
+            miembro.setCedula(cedula);
+            getListaMiembros().add(miembro);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean eliminarMiembro(String cedula) {
+        Miembro miembroExistente = obtenerMiembro(cedula);
+        if (miembroExistente != null) {
+            getListaMiembros().remove(miembroExistente);
+            return true;
+        }else
+            return false;
+    }
+
+    @Override
+    public boolean actualizarMiembro(String nombreNuevo, String cedula, String cedulaNueva) {
+        Miembro miembroExistente = obtenerMiembro(cedula);
+        if (miembroExistente != null){
+            miembroExistente.setNombre(nombreNuevo);
+            miembroExistente.setCedula(cedulaNueva);
+            return true;
+        }else
+            return false;
+    }
+
     public Prestamo crearPrestamo(LocalDate fechaPrestamo,
-                                 LocalDate fechaDevolucion,
-                                 String cedulaMiembro,
-                                 String ISBN,
-                                 String idBibliotecario) {
+                                  LocalDate fechaDevolucion,
+                                  String cedulaMiembro,
+                                  String ISBN,
+                                  String idBibliotecario) {
         Prestamo prestamo = new Prestamo();
         if (obtenerLibro(ISBN) != null) {
             Libro libro = obtenerLibro(ISBN);
@@ -142,48 +191,5 @@ public class Biblioteca implements IMiembroCrud {
         }
 
         return prestamo;
-    }
-
-    public boolean disponibilidadLibro(String ISBN){
-        for (Libro libro : getListaLibros()){
-            if (libro.getISBN().equalsIgnoreCase(ISBN)){
-                if (libro.getEstado() == Estado.DISPONIBLE){
-                    return true;
-                } else {
-                    System.out.println("Libro no esta disponible");
-                    return false;
-                }
-            }
-        }
-        System.out.println("Libro no encontrado en la lista");
-        return false;
-    }
-
-    @Override
-    public boolean crearMiembro(String nombre, String cedula) {
-        Miembro miembroExistente = obtenerMiembro(cedula);
-        if (miembroExistente == null){
-            Miembro miembro = new Miembro();
-            miembro.setNombre(nombre);
-            miembro.setCedula(cedula);
-            getListaMiembros().add(miembro);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
-    public boolean eliminarMiembro(String cedula) {
-        Miembro miembroExistente = obtenerMiembro(cedula);
-        if (miembroExistente != null) {
-            getListaMiembros().remove(miembroExistente);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
-    public boolean actualizarMiembro(String cedula, String nombre) {
-        return false;
     }
 }

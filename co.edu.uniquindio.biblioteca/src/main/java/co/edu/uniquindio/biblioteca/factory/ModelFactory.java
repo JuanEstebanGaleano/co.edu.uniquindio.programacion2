@@ -55,8 +55,8 @@ public class ModelFactory implements IMiembroCrud {
     }
 
     @Override
-    public boolean actualizarMiembro(String cedula, String nombre) {
-        return biblioteca.actualizarMiembro(cedula,nombre);
+    public boolean actualizarMiembro(String nombreNuevo, String cedula, String cedulaNuevo) {
+        return biblioteca.actualizarMiembro(nombreNuevo,cedula,cedulaNuevo);
     }
 
     private Biblioteca inicializarDatos() {
@@ -87,6 +87,10 @@ public class ModelFactory implements IMiembroCrud {
         bibliotecario2.setNombre("Esteban");
         bibliotecario2.setIdEmpleado("12441");
         biblioteca.getListaBibliotecarios().add(bibliotecario2);
+        Bibliotecario bibliotecario3 = new Bibliotecario();
+        bibliotecario3.setNombre("Luis");
+        bibliotecario3.setIdEmpleado("12442");
+        biblioteca.getListaBibliotecarios().add(bibliotecario3);
         Miembro miembro1 = new Miembro();
         miembro1.setNombre("Pedro");
         miembro1.setCedula("2124544");
@@ -95,6 +99,10 @@ public class ModelFactory implements IMiembroCrud {
         miembro2.setNombre("Luis");
         miembro2.setCedula("66467643");
         biblioteca.getListaMiembros().add(miembro2);
+        Miembro miembro3 = new Miembro();
+        miembro3.setNombre("jero");
+        miembro3.setCedula("3198371");
+        biblioteca.getListaMiembros().add(miembro3);
 
         System.out.println("-----LIBROS-----");
         System.out.println(biblioteca.getListaLibros().toString());

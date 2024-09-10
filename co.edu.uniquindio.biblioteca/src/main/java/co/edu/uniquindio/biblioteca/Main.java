@@ -19,15 +19,16 @@ public class Main {
                 "12121"
         );
         crudMiembro(modelFactory,"Lucho","98482947");
+        actualizarMiembro(modelFactory,"","","");
     }
 
     private static void crudMiembro(ModelFactory modelFactory,String nombre,String cedula) {
         crearMiembro(modelFactory,nombre,cedula);
         eliminarMiembro(modelFactory,cedula);
-        actualizarMienbro(modelFactory,nombre,cedula);
+        //actualizarMienbro(modelFactory,nombre,cedula);
     }
 
-    private static void actualizarMienbro(ModelFactory modelFactory, String nombre, String cedula) {
+    private static void actualizarMiembro(ModelFactory modelFactory, String nombreNuevo, String cedula,String cedulaNueva) {
 
     }
 

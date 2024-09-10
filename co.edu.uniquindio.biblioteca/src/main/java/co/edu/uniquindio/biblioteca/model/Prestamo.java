@@ -52,4 +52,15 @@ public class Prestamo {
     public void setBibliotecarioAsociado(Bibliotecario bibliotecarioAsociado) {
         this.bibliotecarioAsociado = bibliotecarioAsociado;
     }
+
+    @Override
+    public String toString() {
+        return "Prestamo{" +
+                "fechaPrestamo=" + fechaPrestamo +
+                ", fechaDevolucion=" + fechaDevolucion +
+                ", miembroAsociado=" + miembroAsociado +
+                ", libroAsociado=" + libroAsociado +
+                ", bibliotecarioAsociado=" + bibliotecarioAsociado +
+                '}';
+    }
 }

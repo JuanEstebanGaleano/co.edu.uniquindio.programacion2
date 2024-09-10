@@ -13,6 +13,10 @@ public class Bibliotecario extends Empleado implements IGestionInventario {
     public Bibliotecario() {
     }
 
+    public Bibliotecario(String nombre, String idEmpleado) {
+        super(nombre, idEmpleado);
+    }
+
     public List<Libro> getListaLibros() {
         return listaLibros;
     }
@@ -30,7 +34,15 @@ public class Bibliotecario extends Empleado implements IGestionInventario {
     }
 
     @Override
+    public String toString() {
+        return "Bibliotecario{" +
+                "listaLibros=" + listaLibros +
+                ", listaPrestamos=" + listaPrestamos +
+                '}';
+    }
+
+    @Override
     public void gestionarItem() {
-    
+
     }
 }

@@ -18,25 +18,21 @@ public class Main {
                 "11223",
                 "12121"
         );
-        crudMiembro(modelFactory,"Lucho","98482947");
-        actualizarMiembro(modelFactory,"","","");
+        //crud miembro
+        crearMiembro(modelFactory,"Lucho","98482947");
+        eliminarMiembro(modelFactory,"66467643");
+        actualizarMiembro(modelFactory,"Hernesto","3198371","22125131");
     }
 
     private static void crudMiembro(ModelFactory modelFactory,String nombre,String cedula) {
         crearMiembro(modelFactory,nombre,cedula);
         eliminarMiembro(modelFactory,cedula);
-<<<<<<< HEAD
         //actualizarMienbro(modelFactory,nombre,cedula);
     }
 
     private static void actualizarMiembro(ModelFactory modelFactory, String nombreNuevo, String cedula,String cedulaNueva) {
-=======
-        actualizarMiembro(modelFactory,nombre,cedula);
-    }
-
-    private static void actualizarMiembro(ModelFactory modelFactory, String nombre, String cedula) {
->>>>>>> b424643a580f9f7f91a7967d0c874a4daa5295d6
-
+        boolean resultado = modelFactory.actualizarMiembro(nombreNuevo,cedula,cedulaNueva);
+        notificacion(resultado,"Actulizado");
     }
 
     private static void eliminarMiembro(ModelFactory modelFactory, String cedula) {

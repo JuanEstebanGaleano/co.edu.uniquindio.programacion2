@@ -25,17 +25,14 @@ public class Main {
     private static void crudMiembro(ModelFactory modelFactory,String nombre,String cedula) {
         crearMiembro(modelFactory,nombre,cedula);
         eliminarMiembro(modelFactory,cedula);
-<<<<<<< HEAD
         //actualizarMienbro(modelFactory,nombre,cedula);
     }
 
     private static void actualizarMiembro(ModelFactory modelFactory, String nombreNuevo, String cedula,String cedulaNueva) {
-=======
         actualizarMiembro(modelFactory,nombreNuevo,cedula);
     }
 
     private static void actualizarMiembro(ModelFactory modelFactory, String nombre, String cedula) {
->>>>>>> b424643a580f9f7f91a7967d0c874a4daa5295d6
 
     }
 

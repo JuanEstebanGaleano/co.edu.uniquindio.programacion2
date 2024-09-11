@@ -77,7 +77,6 @@ public class Biblioteca implements IMiembroCrud {
                 return bibliotecario;
             }
         }
-        System.out.println("No se encontro el bibliotecario");
 
         return null;
     }
@@ -89,6 +88,7 @@ public class Biblioteca implements IMiembroCrud {
                 return libro;
             }
         }
+
         return null;
     }
 
@@ -103,6 +103,7 @@ public class Biblioteca implements IMiembroCrud {
                 }
             }
         }
+        System.out.println("Libro no encontrado en la lista");
         return false;
     }
 
@@ -112,6 +113,7 @@ public class Biblioteca implements IMiembroCrud {
                 return miembro;
             }
         }
+
         return null;
     }
 
@@ -123,6 +125,7 @@ public class Biblioteca implements IMiembroCrud {
             miembro.setNombre(nombre);
             miembro.setCedula(cedula);
             getListaMiembros().add(miembro);
+            System.out.println();
             return true;
         }else
             return false;
@@ -132,6 +135,7 @@ public class Biblioteca implements IMiembroCrud {
     public boolean eliminarMiembro(String cedula) {
         Miembro miembroExistente = obtenerMiembro(cedula);
         if (miembroExistente != null) {
+            System.out.println("El miembro: " + miembroExistente.getNombre() + " ha sido eliminado.");
             getListaMiembros().remove(miembroExistente);
             return true;
         }else

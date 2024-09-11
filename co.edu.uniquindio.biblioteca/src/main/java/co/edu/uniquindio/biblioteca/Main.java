@@ -31,7 +31,7 @@ public class Main {
 
     private static void actualizarMiembro(ModelFactory modelFactory, String nombreNuevo, String cedula,String cedulaNueva) {
 =======
-        actualizarMiembro(modelFactory,nombre,cedula);
+        actualizarMiembro(modelFactory,nombreNuevo,cedula);
     }
 
     private static void actualizarMiembro(ModelFactory modelFactory, String nombre, String cedula) {

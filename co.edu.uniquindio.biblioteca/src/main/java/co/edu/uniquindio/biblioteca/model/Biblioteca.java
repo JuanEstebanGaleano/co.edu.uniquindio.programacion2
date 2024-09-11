@@ -89,8 +89,6 @@ public class Biblioteca implements IMiembroCrud {
                 return libro;
             }
         }
-        System.out.println("No se encontro el bibliotecario");
-
         return null;
     }
 
@@ -105,7 +103,6 @@ public class Biblioteca implements IMiembroCrud {
                 }
             }
         }
-        System.out.println("Libro no encontrado en la lista");
         return false;
     }
 
@@ -115,8 +112,6 @@ public class Biblioteca implements IMiembroCrud {
                 return miembro;
             }
         }
-        System.out.println("No se encontro el miembro");
-
         return null;
     }
 
